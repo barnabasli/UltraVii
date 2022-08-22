@@ -1,3 +1,4 @@
+// This is for the retractable UltraVii 10.0, does NOT include photoresistors or a tilt sensor but rather utilizes a gyroscope
 //LED RING vars
 #include <FastLED.h>
 #define NUM_LEDS 12
