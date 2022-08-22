@@ -1,3 +1,5 @@
+// This is the code for the non-retractable UltraVii 11.0. This version incorporates photoresistors to perform the same function as the gyroscope in the retractable prototype.
+
 #include <SPI.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
@@ -29,7 +31,6 @@ void setup() {
     pinMode(padled, OUTPUT);
     pinMode(LED_BUILTIN, OUTPUT);
     padbrightness = 0;
-
     //pinMode(inPin, INPUT);
     //digitalWrite(2, HIGH);
 }
@@ -217,8 +218,4 @@ for (int j=2; j<=6; j++)
   display.println(("Finished!"));
   display.display();
   display.clearDisplay();
-
-#define XPOS   0 // Indexes into the 'icons' array in function below
-#define YPOS   1
-#define DELTAY 2
 }
