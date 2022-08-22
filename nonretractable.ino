@@ -1,3 +1,5 @@
+// This code is for the non-retractable UltraVii 9.0
+
 #include <SPI.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
