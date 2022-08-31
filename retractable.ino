@@ -1,4 +1,4 @@
-// This is for the retractable UltraVii 10.0, does NOT include photoresistors or a tilt sensor but rather utilizes a gyroscope
+//Does NOT include photoresistors or a tilt sensor but rather utilizes a gyroscope
 //LED RING vars
 #include <FastLED.h>
 #define NUM_LEDS 12
@@ -10,7 +10,7 @@ boolean gyros = false;
 boolean lol;
 int blinkredcount;
 
-//Gyro
+//Gyroscope
 #include<Wire.h>
 const int MPU_addr=0x68;
 int16_t AcX,AcY,AcZ,Tmp,GyX,GyY,GyZ;
