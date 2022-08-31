@@ -12,10 +12,8 @@
 int padled = 9;
 int padbrightness = 0;
 
-// Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
-// UNO:       A4(SDA), A5(SCL)
-#define OLED_RESET     4 // Reset pin # (or -1 if sharing Arduino reset pin)
-#define SCREEN_ADDRESS 0x3C ///< See datasheet for Address; 0x3D for 128x64, 0x3C for 128x32
+#define OLED_RESET     4
+#define SCREEN_ADDRESS 0x3C
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 void setup() {
   Serial.begin(9600);
