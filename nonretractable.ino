@@ -29,6 +29,7 @@ int padbrightness = 0;
 #define OLED_RESET     4
 #define SCREEN_ADDRESS 0x3C
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+int timeremaining = 15;
 
 void setup() {
   if(!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {
@@ -102,6 +103,7 @@ void timer() {
     display.setCursor(60, 6);
     display.print((i));
     display.display();
+    timeremaining = i;
     for (int j = 0; j < 20; j++) {
       check();
       if (liftedup) {
@@ -126,6 +128,7 @@ void timer() {
     display.setCursor(83, 6);
     display.print((i));
     display.display();
+    timeremaining = i;
     for (int j = 0; j < 20; j++) {
       check();
       delay(50);
@@ -160,26 +163,60 @@ void gyro() {
 
 void check() {
   gyro();
-  if (x >= 30 && x <= 180 || x > 180 && x <= 330) {
+  if (x >= 30 && x <= 330) {
     for (int i = 255; i > 0; i--) {
       padbrightness--;
       analogWrite(padled, padbrightness);
-      Serial.println(padbrightness);
       delay(1.7);
    }
-   display.clearDisplay();
-   display.setCursor(15, 6);
-   display.println(("PAUSED"));
-   display.display();
-   while(x >= 30 && x <= 180 || x > 180 && x <= 330) {
-     gyro();
-   }
-   for (int i = 0; i < 255; i++) {
-     padbrightness++;
-     analogWrite(padled, padbrightness);
-     Serial.println(padbrightness);
-     delay(3.5);
-   }
-   liftedup = true;
- }
+  while (x >= 30 && x <= 330) {
+    for (int i = 0; i < 10; i++) {
+      delay(50);
+      gyro();
+      if (x < 30 || x > 330) {
+        goto label1;
+      }
+    }
+    display.clearDisplay();
+    batteryindicator();
+    display.display();
+    for (int i = 0; i < 10; i++) {
+      delay(50);
+      gyro();
+      if (x < 30 || x > 330) {
+        goto label1;
+      }
+    }
+    holdtime();
+  }
+  label1:
+    holdtime();
+    for (int i = 0; i < 255; i++) {
+      padbrightness++;
+      analogWrite(padled, padbrightness);
+      delay(3.5);
+    }
+  liftedup = true;
+  }
+}
+
+void holdtime() {
+  display.clearDisplay();
+  if (timeremaining > 9) {
+    batteryindicator();
+    display.setTextSize(3);
+    display.setCursor(30, 6);
+    display.print(("0:"));
+    display.setCursor(60, 6);
+    display.print((timeremaining));
+    display.display();
+  } else {
+    batteryindicator();
+    display.setTextSize(3);
+    display.setCursor(25, 6);
+    display.print(("0:0"));
+    display.setCursor(83, 6);
+    display.print((timeremaining));
+    display.display();
+  }
 }
